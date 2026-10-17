@@ -1,4 +1,3 @@
-import pytest
 
 from teapot import tokens
 from teapot.lexer import Lexer
