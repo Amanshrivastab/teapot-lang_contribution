@@ -675,6 +675,30 @@ Before submitting a pull request, ensure that the tests pass locally.
 
 If a test cannot be run locally for a documented reason, mention this in the pull request.
 
+### Adding a Test-Only Change
+
+Use this checklist when adding a focused regression test without changing
+unrelated compiler behaviour.
+
+* [ ] Pick the right location: `tests/unit/` for a single component (lexer,
+      parser, or a semantic pass), `tests/integration/` for behaviour that
+      only appears when a full `.tp` program goes through the compiler.
+* [ ] Follow the naming and structure of the existing tests in that folder.
+* [ ] Reproduce the problem first, then keep the test small: one behaviour
+      per test, using the shortest `.tp` input that triggers it.
+* [ ] Confirm the test fails without the fix and passes with it.
+* [ ] Do not change anything under `src/teapot/`, and do not reformat or
+      rename unrelated files. Check with `git diff --stat` that only
+      `tests/` (and docs or `CHANGELOG.md`, if needed) changed.
+* [ ] Run the checks listed under Pull Requests. CI also requires 100%
+      branch coverage, which you can check locally with:
+
+      python -m pytest --cov=teapot --cov-branch --cov-report=term-missing
+
+* [ ] Use a focused commit message with a component prefix, for example
+      `parser: add regression test for nested if/else`.
+* [ ] Add the corresponding `CHANGELOG.md` entry in the same commit.
+
 ⸻
 
 Git
